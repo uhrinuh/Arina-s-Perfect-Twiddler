@@ -17,9 +17,10 @@ $(document).ready(() => {
     for (let i = streams.home.length - 1; i >= 0; i--) {
       const tweet = streams.home[i];
       const $tweet = $('<div></div>');
-      // timestamp
-      const formattedTimestamp = moment(tweet.created_at).fromNow();
-      const text = `@${tweet.user}: ${tweet.message} (${formattedTimestamp})`;
+      // timestamps
+      const originalTimestamp = moment(tweet.created_at).format("MMMM Do YYYY, h:mm:ss a");
+      const relativeTimestamp = moment(tweet.created_at).fromNow();
+      const text = `${originalTimestamp}, @${tweet.user}: ${tweet.message} (${relativeTimestamp})`;
       $tweet.text(text);
       // add $tweet to $tweetsDiv
       $tweetsDiv.append($tweet);
@@ -29,8 +30,9 @@ $(document).ready(() => {
   function handleNewTweet(tweet) {
     const $newTweet = $('<div></div>');
     // timestamp
-    const formattedTimestamp = moment(tweet.created_at).fromNow();
-    const newText = `@${tweet.user}: ${tweet.message} (${formattedTimestamp})`;
+    const originalTimestamp = moment(tweet.created_at).format("MMMM Do YYYY, h:mm:ss a");
+    const relativeTimestamp = moment(tweet.created_at).fromNow();
+    const newText = `${originalTimestamp}, @${tweet.user}: ${tweet.message} (${relativeTimestamp})`;
     $newTweet.text(newText);
     $tweetsDiv.prepend($newTweet);
   }
