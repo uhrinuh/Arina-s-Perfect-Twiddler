@@ -21,7 +21,7 @@ $(document).ready(() => {
       // get all tweets in reverse order and assign it to tweet
       const tweet = streams.home[i];
       // create a new div and assign it to $tweet
-      const $tweet = $('<div></div>');
+      const $tweet = $('<div id="each tweet">');
       // timestamps
       const originalTimestamp = moment(tweet.created_at).format("MMMM Do YYYY, h:mm:ss a");
       const relativeTimestamp = moment(tweet.created_at).fromNow();
@@ -36,7 +36,7 @@ $(document).ready(() => {
   // create a function to add the new tweets to the top of the tweets div
   function handleNewTweet(tweet) {
     // create a new div and assign it to $newTweet
-    const $newTweet = $('<div></div>');
+    const $newTweet = $('<div id="each new tweet">');
     // timestamp
     const originalTimestamp = moment(tweet.created_at).format("MMMM Do YYYY, h:mm:ss a");
     const relativeTimestamp = moment(tweet.created_at).fromNow();
