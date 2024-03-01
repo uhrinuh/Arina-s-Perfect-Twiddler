@@ -27,7 +27,7 @@ $(document).ready(() => {
       const $username = $(`<div id = "username">@${tweet.user}</div>`);
       // make $username clickable by giving it a click handler
       // inside the click handler, call makeNewTweets(stream.users[tweet.user])
-      $username.click(() => {
+      $username.on('click', function() {
         makeNewTweets(streams.users[tweet.user]);
       });
       // add $username to $tweet
@@ -49,7 +49,7 @@ $(document).ready(() => {
   makeNewTweets(streams.home);
 
   // bind a click event to the button
-  $showNewTweetsButton.click(() => {
+  $showNewTweetsButton.on('click',function() {
     makeNewTweets(streams.home);
   });
 
@@ -60,6 +60,26 @@ $(document).ready(() => {
 
   // update timestamps every minute
   setInterval(updateTimestamps, 60000);
+
+  // create my form
+  const $tweetForm = $('<form id="tweetForm">');
+  const $usernameLabel = $('<label for="username">Username:</label>');
+  const $usernameInput = $('<input type="text" id="username" name="username" required>');
+  const $tweetLabel = $('<label for="tweet">Tweet:</label>');
+  const $tweetInput = $('<input type="text" id="tweet" name="tweet" required>');
+  const $submitButton = $('<button type="submit">Post Tweet</button>');
+
+  $tweetForm.append($usernameLabel, $usernameInput, $tweetLabel, $tweetInput, $submitButton);
+  $body.prepend($tweetForm);
+
+  $tweetForm.on('submit', function(event){
+    event.preventDefault();
+    const username = $userNameInput.val();
+    const tweetMessage = $tweetInput.val()
+    const theTweet = username + tweetMessage;
+    writeTweet(theTweet);
+    makeNewTweets(streams.home);
+  })
 
 });
 
