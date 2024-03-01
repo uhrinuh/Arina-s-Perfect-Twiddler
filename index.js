@@ -9,6 +9,13 @@ $(document).ready(() => {
   const $showNewTweetsButton = $('<button>Show New Tweets</button>');
   // add $showNewTweets button to body using prepend
   $body.prepend($showNewTweetsButton);
+  // make a header and add it to $header
+  const $header = $('<header id="twiddlerHeader">Twiddler</header>');
+
+  //decorate!
+  $body.css("background-color", "lavender")
+  $tweetsDiv.css("background-color", "pink").css("border-radius", "5px").css("padding", "3px")
+  $header.css("font-family", "Snell Roundhand").css('font-size', '50px').css('text-align', 'center').css("background-color", "LightPink").css("border-radius", "5px").css("padding", "3px")
 
   // create a function to make new tweets
   function makeNewTweets(array) {
@@ -29,6 +36,19 @@ $(document).ready(() => {
       // inside the click handler, call makeNewTweets(stream.users[tweet.user])
       $username.on('click', function() {
         makeNewTweets(streams.users[tweet.user]);
+      });
+      // decorate!
+      $tweet.css({
+        'margin-bottom': '20px',
+        'padding': '10px',
+        'background-color': '#fff',
+        'border': '1px solid #ddd',
+        'border-radius': '8px',
+        'box-shadow': '0 0 5px rgba(0, 0, 0, 0.1)',
+      });
+      $username.css({
+        'font-weight': 'bold',
+        'color': '#333',
       });
       // add $username to $tweet
       $tweet.append($username);
@@ -69,17 +89,59 @@ $(document).ready(() => {
   const $tweetInput = $('<input type="text" id="tweet" name="tweet" required>');
   const $submitButton = $('<button type="submit">Post Tweet</button>');
 
+  // decorate!
+  $tweetForm.css({
+    'margin-top': '20px',
+    'padding': '20px',
+    'background-color': '#f9f9f9',
+    'border-radius': '8px',
+    'box-shadow': '0 0 10px rgba(0, 0, 0, 0.1)',
+   });
+  $tweetForm.find('label').css({
+    'display': 'block',
+    'margin-bottom': '8px',
+  });
+  $tweetForm.find('input').css({
+    'width': '100%',
+    'padding': '8px',
+    'margin-bottom': '16px',
+    'box-sizing': 'border-box',
+    'border': '1px solid #ccc',
+    'border-radius': '4px',
+    'font-size': '16px',
+  });
+  $tweetForm.find('button').css({
+    'background-color': '#4CAF50',
+    'color': '#fff',
+    'padding': '10px 20px',
+    'border': 'none',
+    'border-radius': '4px',
+    'cursor': 'pointer',
+    'font-size': '16px',
+  });
+  
+  // add all my forms to the right spots
   $tweetForm.append($usernameLabel, $usernameInput, $tweetLabel, $tweetInput, $submitButton);
   $body.prepend($tweetForm);
+  // make the header be on top of the form
+  $header.insertBefore($tweetForm);
 
   $tweetForm.on('submit', function(event){
     event.preventDefault();
-    const username = $userNameInput.val();
-    const tweetMessage = $tweetInput.val()
-    const theTweet = username + tweetMessage;
-    writeTweet(theTweet);
+    var username = $usernameInput.val();
+    // set window.visitor to username
+    window.visitor = username;
+    // if that username doesn't exist then make it
+    if (!streams.users[username]) {
+      streams.users[username] = [];
+    }
+    // make the tweet too
+    const tweetMessage = $tweetInput.val();
+    // reference writeTweet
+    writeTweet(tweetMessage);
+    // reference makeNewTweets
     makeNewTweets(streams.home);
-  })
+  });
 
 });
 
