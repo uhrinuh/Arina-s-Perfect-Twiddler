@@ -144,9 +144,3 @@ $(document).ready(() => {
   });
 
 });
-
-// create a form for the user to be able to type in their new tweet
-  // on submission of that form, thats when i call writeTweet function
-  // errors will show up and pay attention to them
-    // look at the lines of the errors and look at whats happening
-    // set global.visitor to whatever i want like visitor
